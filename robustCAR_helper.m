@@ -345,7 +345,8 @@ function   delta  = get_delta( d, mu, scales, c )
 
   try
     n_candidates      = length( candidate_deltas );
-    new_mus           = mu + make_col( candidate_deltas )';
+    %new_mus           = mu + make_col( candidate_deltas )';
+    new_mus           = mu + candidate_deltas';
     x                 = ( d*ones(1,n_candidates) - ones(size(d,1),1)*new_mus ) ./ ( scales * ones(1,n_candidates));
     newe_s            = sum( bisquarePsiFunction( x,c ));
     [ tmp i_mu ]      = min( abs( newe_s ));
