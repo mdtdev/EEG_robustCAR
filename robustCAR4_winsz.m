@@ -29,8 +29,9 @@ function [data_out, ref_est, nn_ref_est] = robustCAR4_winsz(data_in, dt, n_min_c
         
         %% here is where things are hanging!!! 
         %parfor jj = 1 : n
+        jjmax = 0;  % for testing
         parfor jj = 1:n
-            
+            jjmax = max(jj, jjmax); % for testing
             if mod( jj, 1 ) == 0   % orig mod was to 100
               fprintf( 'Sample No: %d\n', jj )
             end
@@ -41,7 +42,7 @@ function [data_out, ref_est, nn_ref_est] = robustCAR4_winsz(data_in, dt, n_min_c
             
             if std( data_in(:,inds)) > 1e-20
                 [ tmp_out, ref_out, nn_out ]  = robustCAR_helper( data_in(:,inds), dt, n_min_contributing_channels );
-
+                fprintf('just back from robustCAR_helper'); % for testing
                 try
                     data_out(:,jj)              = tmp_out(1,:)';
                     ref_est(jj)                 = ref_out(1);
@@ -53,13 +54,16 @@ function [data_out, ref_est, nn_ref_est] = robustCAR4_winsz(data_in, dt, n_min_c
                 end
 
             else
-                data_out(:,jj)              = 0; ref_est(jj) = mean(data_in(:,jj)); nn_ref_est(jj) = size( data_in, 1 );
+                data_out(:,jj)              = 0; 
+                ref_est(jj) = mean(data_in(:,jj)); 
+                nn_ref_est(jj) = size( data_in, 1 );
             end
         end % for jj
         
+        fprintf('jjmax is -- %d\n\n', jjmax);  % for testing
         %% end of the parfor loop!
         
-        %delete(gcp('nocreate'))      %matlabpool close
+        delete(gcp('nocreate'))      %matlabpool close
         fprintf( '\n\nrobustCAR4_winsz: Exiting for jj = 1 : n ...\n\n' )
         toc
         data_out = data_out';
