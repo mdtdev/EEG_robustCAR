@@ -29,7 +29,7 @@ function [data_out, ref_est, nn_ref_est] = robustCAR4_winsz(data_in, dt, n_min_c
         
         %% here is where things are hanging!!! 
         %parfor jj = 1 : n
-        for jj = 1:n
+        parfor jj = 1:n
             
             if mod( jj, 1 ) == 0   % orig mod was to 100
               fprintf( 'Sample No: %d\n', jj )
