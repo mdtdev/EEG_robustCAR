@@ -27,7 +27,7 @@ function [data_out, ref_est, nn_ref_est] = robustCAR4_winsz(data_in, dt, n_min_c
         %       matlabpool( n_cores );
         %     end
         
-        %% here is where things are hanging!!! 
+        % here is where things are hanging!!! 
         %parfor jj = 1 : n
         jjmax = 0;  % for testing
         parfor jj = 1:n
@@ -61,9 +61,9 @@ function [data_out, ref_est, nn_ref_est] = robustCAR4_winsz(data_in, dt, n_min_c
         end % for jj
         
         fprintf('jjmax is -- %d\n\n', jjmax);  % for testing
-        %% end of the parfor loop!
+        % end of the parfor loop!
         
-        delete(gcp('nocreate'))      %matlabpool close
+        %delete(gcp('nocreate'))      %matlabpool close
         fprintf( '\n\nrobustCAR4_winsz: Exiting for jj = 1 : n ...\n\n' )
         toc
         data_out = data_out';
